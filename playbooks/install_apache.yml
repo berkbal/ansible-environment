@@ -1,0 +1,20 @@
+---
+
+- hosts: all # Butun hostlarda calisacak
+  become: true # Tam yetkili kullanici olarak calistirir.
+  tasks:
+
+
+  - name: Update Repository Index
+    apt:
+      update_cache: yes
+
+  - name: Apache2 Paketini Kur
+    apt: # BU task uzerinde kullanmak istedigimiz modulun adi. Paket kurulumu yapmak icin apt modulu kullanilir
+     name: apache2
+     state: latest
+  
+  - name: Apache'ye PHP Paketlerini Kur.
+    apt:
+      name: libapache2-mod-php
+      state: latest
