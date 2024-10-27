@@ -8,13 +8,33 @@
   - name: Update Repository Index
     apt:
       update_cache: yes
+    when: ansible_distribution in ["Debian", "Ubuntu"]
 
   - name: Apache2 Paketini Kur
     apt: # BU task uzerinde kullanmak istedigimiz modulun adi. Paket kurulumu yapmak icin apt modulu kullanilir
      name: apache2
      state: latest
-  
+    when: ansible_distribution in ["Debian", "Ubuntu"]
+
   - name: Apache'ye PHP Paketlerini Kur.
     apt:
       name: libapache2-mod-php
-      state: latest
+    when: ansible_distribution in ["Debian", "Ubuntu"]
+
+## CentOS
+
+  - name: Update Repository Index
+    dnf:
+      update_cache: yes
+    when: ansible_distribution  == "CentOS"
+
+  - name: Httpd Paketini Kur (CentOS)
+    dnf: # BU task uzerinde kullanmak istedigimiz modulun adi. Paket kurulumu yapmak icin apt modulu kullanilir
+     name: httpd
+     state: latest
+    when: ansible_distribution == "CentOS"
+
+  - name: Php paketini kur (CentOS)
+    apt:
+      name: php
+    when: ansible_distribution == "CentOS"
