@@ -1,0 +1,17 @@
+---
+
+- hosts: web_servers
+  become: true # Tam yetkili kullanici olarak calistirir.
+  tasks:
+
+  - name: Install Updates (CentOS)
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: Install Updates (Ubuntu)
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Debian"
