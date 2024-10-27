@@ -2,6 +2,7 @@
 
 - hosts: web_servers
   become: true # Tam yetkili kullanici olarak calistirir.
+  pre_tasks:
   tasks:
 
   - name: Install Updates (CentOS)
@@ -15,3 +16,20 @@
       upgrade: dist
       update_cache: yes
     when: ansible_distribution == "Debian"
+
+- hosts: db_servers
+  become: true
+  tasks:
+   - name: Install MariaDB
+     apt:
+      name: mariadb-server
+      state: latest
+     when: ansible_distribution == "Debian"
+   
+   - name: Install MariaDB (CentOS)
+     dnf:
+      name: mariadb
+      state: latest
+     when: ansible_distribution == "CentOS"
+
+
