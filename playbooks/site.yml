@@ -11,11 +11,32 @@
       update_cache: yes
     when: ansible_distribution == "CentOS"
 
-  - name: Install Updates (Ubuntu)
+  - name: Install Updates (Debian)
     apt:
       upgrade: dist
       update_cache: yes
     when: ansible_distribution == "Debian"
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: Install Apache and Php Debian
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Debian"
+
+  - name: Install Apache and Php on CentOS
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "CentOS"
+
 
 - hosts: db_servers
   become: true
