@@ -4,37 +4,11 @@
   become: true # Tam yetkili kullanici olarak calistirir.
   tasks:
 
-
-  - name: Update Repository Index
-    apt:
-      update_cache: yes
-    when: ansible_distribution in ["Debian", "Ubuntu"]
-
-  - name: Apache2 Paketini Kur
-    apt: # BU task uzerinde kullanmak istedigimiz modulun adi. Paket kurulumu yapmak icin apt modulu kullanilir
-     name: apache2
+## Ubuntu
+  - name: apache ve Php paketlerini kur
+    package: # Bu task uzerinde kullanmak istedigimiz modulun adi. Paket kurulumu yapmak icin apt modulu kullanilir
+     name: 
+       - "{{ apache_package }}"
+       - "{{ php_package }} "
      state: latest
-    when: ansible_distribution in ["Debian", "Ubuntu"]
-
-  - name: Apache'ye PHP Paketlerini Kur.
-    apt:
-      name: libapache2-mod-php
-    when: ansible_distribution in ["Debian", "Ubuntu"]
-
-## CentOS
-
-  - name: Update Repository Index
-    dnf:
-      update_cache: yes
-    when: ansible_distribution  == "CentOS"
-
-  - name: Httpd Paketini Kur (CentOS)
-    dnf: # BU task uzerinde kullanmak istedigimiz modulun adi. Paket kurulumu yapmak icin apt modulu kullanilir
-     name: httpd
-     state: latest
-    when: ansible_distribution == "CentOS"
-
-  - name: Php paketini kur (CentOS)
-    apt:
-      name: php
-    when: ansible_distribution == "CentOS"
+     update_cache: yes

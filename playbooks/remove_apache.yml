@@ -14,7 +14,7 @@
      name: apache2
      state: absent
   
-  - name: Kurulu apache2 paketini kaldir
+  - name: Kurulu php paketini kaldir
     apt:
       name: libapache2-mod-php
       state: absent
